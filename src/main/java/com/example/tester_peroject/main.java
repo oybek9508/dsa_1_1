@@ -1,7 +1,6 @@
 package com.example.tester_peroject;
 
 import com.example.tester_peroject.tasks.LinkedList1_1;
-import com.example.tester_peroject.tasks.Node;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
@@ -11,19 +10,16 @@ public class main {
 
         LinkedList1_1 list = new LinkedList1_1();
 
-        Node node1 = new Node(1);
-        Node node2 = new Node(2);
-        Node node3 = new Node(3);
+        list.insert(1);
+        list.insert(2);
+        list.insert(3);
+        list.insert(4);
+        list.insert(5);
+        list.insert(6);
 
-        node1.next = node2;
-        node2.next = node3;
-        node3.next = null;
+        list.rotateLinkedList(4);
 
-        node1.random = node3;
-        node2.random = node1;
-        node3.random = node2;
-
-        System.out.println(list.copyListWithRandomPointer(node1));
+        list.print();
 
     }
 

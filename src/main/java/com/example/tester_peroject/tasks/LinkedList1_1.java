@@ -20,14 +20,14 @@ public class LinkedList1_1 {
         }
     }
 
-    public void insertAtTheEnd(int data) {
-        var newNode = new Node(data);
-        if (head == null) head = tail = newNode;
-
-        tail.next = newNode;
-        tail = tail.next;
-        size++;
-    }
+//    public void insert(int data) {
+//        var newNode = new Node(data);
+//        if (head == null) head = tail = newNode;
+//
+//        tail.next = newNode;
+//        tail = tail.next;
+//        size++;
+//    }
 
 
     public void insertFirst(int value) {
@@ -243,23 +243,96 @@ public class LinkedList1_1 {
         return pointer1.data;
     }
 
-    public Node copyListWithRandomPointer(Node h) {
-        var node = h;
-        Node dummy = new Node(0);
+    public int copyListWithRandomPointer(Node head) {
+        if (head == null) return -1;
 
-        while (node != null) {
-            dummy.next = node;
-            node = node.next;
-            dummy = dummy.next;
-//            while (node.random != null) {
-//                dummy.random = node.random;
-//                node = node.random;
-//            }
+        Node current = head;
+
+        // step1: create new nodes for each original nodes and connect them with original list
+        while (current != null) {
+            Node newNode = new Node(current.data);
+            newNode.next = current.next;
+            current.next = newNode;
+            current = newNode.next;
         }
 
-        head = dummy.next;
-        dummy = head;
-        return dummy;
+        // step2: connect the random pointers
+        current = head;
+        while (current != null) {
+            if (current.random != null) {
+                current.next.random = current.random.next;
+            }
+            current = current.next.next;
+        }
+
+        // step3: separate the original nodes and copied nodes
+        current = head;
+        Node copyHead = head.next;
+        Node copy = copyHead;
+        while (current != null) {
+            current.next = current.next.next;
+            if (copy.next != null) {
+                copy.next = copy.next.next;
+            }
+
+            current = current.next;
+            copy = copy.next;
+        }
+        return copyHead.data;
+    }
+
+    public void swapNodesInPairs() {
+        if (head == null || head.next == null) {
+            System.out.println("List is empty or has only one node, no swap needed.");
+            return;
+        }
+
+        Node prev = null;
+        var current = head;
+        head = current.next;
+        while (current != null && current.next != null) {
+            Node next = current.next;
+            current.next = next.next;
+            next.next = current;
+
+            if (prev != null) {
+                prev.next = next;
+            }
+            prev = current;
+            current = current.next;
+        }
+    }
+
+    public void rotateLinkedList(int k) {
+        if (head == null || head.next == null) {
+            System.out.println("List is empty or has only one node, no rotation is need");
+            return;
+        }
+
+        if (k == 0 || size <= k) {
+            System.out.println("Size of list is lesser than then k or k is 0");
+            return;
+        }
+
+        int counter = 0;
+        Node prev = head;
+        var slow = head;
+        var fast = head;
+
+        while (fast.next != null) {
+            fast = fast.next;
+            if (counter >= k - 1) {
+                slow = slow.next;
+            }
+            if (counter > k - 1) {
+                prev = prev.next;
+            }
+            counter++;
+        }
+
+        fast.next = head;
+        head = slow;
+        prev.next = null;
     }
 
     public void print() {
