@@ -1,4 +1,4 @@
-package com.example.tester_peroject.tasks;
+package com.example.tester_peroject.tasks.linkedlist;
 
 public class Node {
     public Integer data;

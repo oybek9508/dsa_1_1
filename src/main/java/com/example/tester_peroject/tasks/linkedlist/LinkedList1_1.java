@@ -1,4 +1,4 @@
-package com.example.tester_peroject.tasks;
+package com.example.tester_peroject.tasks.linkedlist;
 
 public class LinkedList1_1 {
     public Node head;
@@ -19,16 +19,6 @@ public class LinkedList1_1 {
             size++;
         }
     }
-
-//    public void insert(int data) {
-//        var newNode = new Node(data);
-//        if (head == null) head = tail = newNode;
-//
-//        tail.next = newNode;
-//        tail = tail.next;
-//        size++;
-//    }
-
 
     public void insertFirst(int value) {
         var newNode = new Node(value);
@@ -333,6 +323,51 @@ public class LinkedList1_1 {
         fast.next = head;
         head = slow;
         prev.next = null;
+    }
+
+    public void partitionList(int x) {
+        if (head == null || head.next == null) {
+            System.out.println("The list is empty or there is only one node, node partition needed.");
+            return;
+        }
+
+        var curr = head;
+        Node smallHead = null;
+        Node smallTail = null;
+        Node highHead = null;
+        Node highTail = null;
+
+        while (curr != null) {
+            if (curr.data < x) {
+                if (smallHead == null) {
+                    smallHead = curr;
+                    smallTail = curr;
+                } else {
+                    smallTail.next = curr;
+                    smallTail = curr;
+                }
+            } else {
+                if (highHead == null) {
+                    highHead = curr;
+                    highTail = curr;
+                } else {
+                    highTail.next = curr;
+                    highTail = curr;
+                }
+            }
+            curr = curr.next;
+        }
+
+        if (smallTail == null) {
+            head = highHead;
+        } else {
+            smallTail.next = highHead;
+            head = smallHead;
+        }
+
+        if (highTail != null) {
+            highTail.next = null;
+        }
     }
 
     public void print() {
