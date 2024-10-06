@@ -6,9 +6,6 @@ import java.util.LinkedList;
 public class StackWithLinkedList {
     private LinkedList<Integer> linkedList = new LinkedList<>();
 
-    public StackWithLinkedList() {
-    }
-
     public void push(int data) {
         linkedList.push(data);
     }
